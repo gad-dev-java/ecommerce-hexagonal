@@ -1,0 +1,95 @@
+services:
+  postgres-notifications:
+    image: postgres:17-alpine
+    container_name: db-notifications
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infra/postgres/notifications-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_notifications:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+  postgres-orders:
+    image: postgres:17-alpine
+    container_name: db-orders
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./infra/postgres/orders-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_orders:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  postgres-payments:
+    image: postgres:17-alpine
+    container_name: db-payments
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./infra/postgres/payments-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_payments:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  postgres-products:
+    image: postgres:17-alpine
+    container_name: db-products
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./infra/postgres/products-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_products:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  postgres-reviews:
+    image: postgres:17-alpine
+    container_name: db-reviews
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./infra/postgres/reviews-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_reviews:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  postgres-users:
+    image: postgres:17-alpine
+    container_name: db-users
+    environment:
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5437:5432"
+    volumes:
+      - ./infra/postgres/users-service/init-scripts:/docker-entrypoint-initdb.d
+      - postgres_data_users:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  postgres_data_notifications:
+  postgres_data_orders:
+  postgres_data_payments:
+  postgres_data_products:
+  postgres_data_reviews:
+  postgres_data_users:

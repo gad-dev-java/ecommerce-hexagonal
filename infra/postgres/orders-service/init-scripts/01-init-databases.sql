@@ -1,0 +1,1 @@
+CREATE DATABASE orders_service_db;
