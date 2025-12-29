@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/orders")
 public class OrderRestAdapter {
     private final CreateOrderUseCase createOrderUseCase;
     private final OrderRestMapper orderRestMapper;

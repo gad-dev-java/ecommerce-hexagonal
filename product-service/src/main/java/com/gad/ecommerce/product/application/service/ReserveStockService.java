@@ -6,6 +6,7 @@ import com.gad.ecommerce.product.application.ports.output.ProductPersistencePort
 import com.gad.ecommerce.product.domain.exception.ProductNotFoundException;
 import com.gad.ecommerce.product.domain.model.Product;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ReserveStockService implements ReserveStockUseCase {
     private final ProductPersistencePort productPersistencePort;
 
@@ -25,6 +27,7 @@ public class ReserveStockService implements ReserveStockUseCase {
         productFound.reserveStock(quantity);
 
         Product productSaved = productPersistencePort.saveProduct(productFound);
+        log.info("Product saved: {}",productSaved);
         return toDto(productSaved);
     }
 

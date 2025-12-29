@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface ProductExternalPort {
     ProductSummaryDto getProductSummary(UUID productId);
+
+    void reserveStock(UUID productId, Integer quantity);
 }

@@ -44,6 +44,8 @@ public class ProductPersistenceAdapter implements ProductPersistencePort {
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+        ProductEntity entity = productMapper.toEntity(product);
+        ProductEntity productSaved = productRepository.save(entity);
+        return productMapper.toDomain(productSaved);
     }
 }

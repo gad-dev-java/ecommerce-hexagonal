@@ -2,6 +2,7 @@ package com.gad.ecommerce.order.infrastructure.adapters.output.feign;
 
 import com.gad.ecommerce.order.application.ports.input.dto.ProductSummaryDto;
 import com.gad.ecommerce.order.application.ports.output.ProductExternalPort;
+import com.gad.ecommerce.order.infrastructure.adapters.input.rest.model.request.ReserveStockRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,5 +27,11 @@ public class ProductExternalAdapter implements ProductExternalPort {
                 .status(response.data().status())
                 .imageUrl(response.data().imageUrl())
                 .build();
+    }
+
+    @Override
+    public void reserveStock(UUID productId, Integer quantity) {
+        ReserveStockRequest request = new ReserveStockRequest(quantity);
+        productFeignClient.reserveStock(productId.toString(), request);
     }
 }

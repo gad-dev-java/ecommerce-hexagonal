@@ -11,4 +11,5 @@ import org.mapstruct.ReportingPolicy;
 public interface ProductMapper {
 
     Product toDomain(ProductEntity entity);
+    ProductEntity toEntity(Product product);
 }

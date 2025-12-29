@@ -2,6 +2,7 @@ package com.gad.ecommerce.product.infrastructure.adapters.input.rest;
 
 import com.gad.ecommerce.product.application.ports.input.FindProductUseCase;
 import com.gad.ecommerce.product.application.ports.input.GetProductsFilteredUseCase;
+import com.gad.ecommerce.product.application.ports.input.ReserveStockUseCase;
 import com.gad.ecommerce.product.application.ports.input.dto.PaginatedResponse;
 import com.gad.ecommerce.product.application.ports.input.dto.PaginationFilter;
 import com.gad.ecommerce.product.application.ports.input.dto.ProductDto;
@@ -21,10 +22,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductRestAdapter {
     private final GetProductsFilteredUseCase productsFilteredUseCase;
+    private final ReserveStockUseCase  reserveStockUseCase;
     private final FindProductUseCase findProductUseCase;
     private final ProductRestMapper productRestMapper;
 
@@ -86,7 +88,7 @@ public class ProductRestAdapter {
 
     @PostMapping("/{id}/reserve")
     public ResponseEntity<DataResponse<ProductSummaryDto>> reserveStock(@PathVariable String id, @RequestBody ReserveStockRequest request) {
-        ProductDto productDto = findProductUseCase.findProductById(UUID.fromString(id));
+        ProductDto productDto = reserveStockUseCase.reserveStock(UUID.fromString(id), request.quantity());
         ProductSummaryDto productSummaryDto = productRestMapper.toSummary(productDto);
 
         DataResponse<ProductSummaryDto> dataResponse = DataResponse.<ProductSummaryDto>builder()

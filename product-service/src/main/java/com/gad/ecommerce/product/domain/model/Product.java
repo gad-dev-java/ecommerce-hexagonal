@@ -6,12 +6,14 @@ import com.gad.ecommerce.product.domain.exception.InsufficientStockException;
 import com.gad.ecommerce.product.domain.exception.InvalidProductException;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@ToString
 @Getter
 public class Product {
     private UUID id;

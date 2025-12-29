@@ -34,6 +34,9 @@ public class CreateOrderService implements CreateOrderUseCase {
             if (productSummary.stock() < itemCommand.quantity()) {
                 throw new InvalidOrderException("Invalid quantity");
             }
+
+            productExternalPort.reserveStock(itemCommand.productId(), itemCommand.quantity());
+
             OrderItem orderItem = new OrderItem(itemCommand.productId(), productSummary.title(), itemCommand.quantity(), productSummary.price());
             log.info("Adding order item: {}", orderItem);
             order.addItem(orderItem);
