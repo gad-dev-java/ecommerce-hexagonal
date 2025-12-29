@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface ProductPersistencePort {
     Optional<Product> getProductById(UUID id);
     Page<Product> getPageProductsFilteredAndPaginated(Pageable pageable, ProductSearchQuery query);
+    Product saveProduct(Product product);
 }

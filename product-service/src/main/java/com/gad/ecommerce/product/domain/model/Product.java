@@ -2,6 +2,7 @@ package com.gad.ecommerce.product.domain.model;
 
 import com.gad.ecommerce.product.domain.enums.ConditionType;
 import com.gad.ecommerce.product.domain.enums.ProductStatus;
+import com.gad.ecommerce.product.domain.exception.InsufficientStockException;
 import com.gad.ecommerce.product.domain.exception.InvalidProductException;
 import lombok.Builder;
 import lombok.Getter;
@@ -74,6 +75,22 @@ public class Product {
         }
         this.stock = this.stock - quantity;
 
+        if (this.stock == 0) {
+            this.status = ProductStatus.SOLD_OUT;
+        }
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void reserveStock(Integer quantity) {
+        if (quantity == null || quantity <= 0) {
+            throw new InvalidProductException("Quantity must be greater than zero.");
+        }
+
+        if (this.stock < quantity) {
+            throw new InsufficientStockException(String.format("Insufficient stock. Requested: %d, Available: %d", quantity, this.stock));
+        }
+
+        this.stock -= quantity;
         if (this.stock == 0) {
             this.status = ProductStatus.SOLD_OUT;
         }

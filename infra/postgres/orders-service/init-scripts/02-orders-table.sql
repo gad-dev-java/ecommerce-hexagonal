@@ -10,7 +10,6 @@ CREATE TABLE orders
     shipping_cost             NUMERIC(8, 2)    DEFAULT 0.00,
     status                    VARCHAR(20)      DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED')),
     shipping_address_snapshot JSONB              NOT NULL,
-
     created_at                TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
     updated_at                TIMESTAMP        DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,25 +1,31 @@
 package com.gad.ecommerce.product.application.service;
 
-import com.gad.ecommerce.product.application.ports.input.FindProductUseCase;
+import com.gad.ecommerce.product.application.ports.input.ReserveStockUseCase;
 import com.gad.ecommerce.product.application.ports.input.dto.ProductDto;
 import com.gad.ecommerce.product.application.ports.output.ProductPersistencePort;
 import com.gad.ecommerce.product.domain.exception.ProductNotFoundException;
 import com.gad.ecommerce.product.domain.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
-public class FindProductService implements FindProductUseCase {
+@Service
+public class ReserveStockService implements ReserveStockUseCase {
     private final ProductPersistencePort productPersistencePort;
 
     @Override
-    public ProductDto findProductById(UUID id) {
-        return productPersistencePort.getProductById(id)
-                .map(this::toDto)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
+    @Transactional
+    public ProductDto reserveStock(UUID productId, Integer quantity) {
+        Product productFound = productPersistencePort.getProductById(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with id " + productId));
+
+        productFound.reserveStock(quantity);
+
+        Product productSaved = productPersistencePort.saveProduct(productFound);
+        return toDto(productSaved);
     }
 
     private ProductDto toDto(Product product) {

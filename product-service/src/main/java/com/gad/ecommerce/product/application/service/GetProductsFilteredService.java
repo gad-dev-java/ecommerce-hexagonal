@@ -51,7 +51,7 @@ public class GetProductsFilteredService implements GetProductsFilteredUseCase {
 
         Page<Product> productPage = productPersistencePort.getPageProductsFilteredAndPaginated(pageRequest, query);
         List<ProductDto> productDtoList = productPage.stream()
-                .map(this::getProductDto)
+                .map(this::toDto)
                 .toList();
 
         return new PaginatedResponse<>(productDtoList, productPage.getNumber(),
@@ -61,7 +61,7 @@ public class GetProductsFilteredService implements GetProductsFilteredUseCase {
                 productPage.isLast());
     }
 
-    private ProductDto getProductDto(Product product) {
+    private ProductDto toDto(Product product) {
         return ProductDto.builder()
                 .id(product.getId())
                 .sellerId(product.getSellerId())

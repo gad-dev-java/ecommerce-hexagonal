@@ -41,4 +41,9 @@ public class ProductPersistenceAdapter implements ProductPersistencePort {
 
         return productEntityPage.map(productMapper::toDomain);
     }
+
+    @Override
+    public Product saveProduct(Product product) {
+        return null;
+    }
 }
