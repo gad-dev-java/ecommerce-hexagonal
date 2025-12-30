@@ -23,5 +23,8 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+mercadopago:
+  acess-token: APP_USR-5913516933127242-123013-459d4185f5fc1708751fb756415413c6-3102470358
+
 server:
   port: 8083

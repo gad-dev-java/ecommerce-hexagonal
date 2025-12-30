@@ -10,6 +10,7 @@ CREATE TABLE payments
                                                   ('CREDIT_CARD', 'DEBIT_CARD', 'PAYPAL', 'MERCADOPAGO', 'STRIPE')),
     status         VARCHAR(20) DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED')),
     transaction_id VARCHAR(255),
+    payment_url    TEXT,
     created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
 );
