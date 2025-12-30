@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 public record CreateOrderRequest(
-        UUID buyerId,
         UUID sellerId,
         ShippingAddressRequest shippingAddress,
         List<OrderItemRequest> items

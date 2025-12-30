@@ -82,6 +82,38 @@ services:
     networks:
       - ecommerce-network
 
+  postgres-keycloak:
+    image: postgres:17-alpine
+    container_name: db-keycloak
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: gad-dev
+      POSTGRES_PASSWORD: 123456789
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data_keycloak:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
+
+  keycloak-users-ecommerce:
+    image: quay.io/keycloak/keycloak:26.4.7
+    container_name: ecommerce-keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak
+      KC_DB_USERNAME: gad-dev
+      KC_DB_PASSWORD: 123456789
+    ports:
+      - "8180:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    networks:
+      - ecommerce-network
+
 networks:
   ecommerce-network:
     driver: bridge
@@ -93,3 +125,5 @@ volumes:
   postgres_data_products:
   postgres_data_reviews:
   postgres_data_users:
+  postgres_data_keycloak:
+  keycloak_data:

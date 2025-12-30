@@ -1,0 +1,2 @@
+com.gad.ecommerce.common.config.CommonAutoConfiguration
+com.gad.ecommerce.common.config.FeignAutoConfiguration

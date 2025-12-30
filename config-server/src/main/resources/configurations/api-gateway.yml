@@ -15,6 +15,12 @@ spring:
               uri: lb://order-service
               predicates:
                 - Path=/api/v1/orders/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/ecommerce-realm-dev
+          jwk-set-uri: http://localhost:8180/realms/ecommerce-realm-dev/protocol/openid-connect/certs
 
 eureka:
   client:
@@ -35,6 +41,8 @@ logging:
     org.springframework.http.server.reactive: DEBUG
     org.springframework.web.reactive: DEBUG
     reactor.ipc.netty:  INFO
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
 management:
   endpoints:
